@@ -1,0 +1,44 @@
+﻿@model Course
+<form asp-action="Edit" method="post">
+    <div class=" border p-3 mt-4">
+        <div class="row pb-2">
+            <h1 class="text-primary">Edit the Courses</h1>
+        </div>
+        <div asp-validation-summary="All">
+        </div>
+        <input type="hidden" asp-for="CourseId" />
+        <div class="mb-3">
+            <label asp-for="Title"></label>
+            <input asp-for="Title" class="form-control" />
+            <span asp-validation-for="Title" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="Description"></label>
+            <input asp-for="Description" class="form-control" />
+            <span asp-validation-for="Description" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="InstructorId"></label>
+            <input asp-for="InstructorId" class="form-control" />
+            <span asp-validation-for="InstructorId" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="Price"></label>
+            <input asp-for="Price" class="form-control" />
+        </div>
+        <div class="row">
+            <div class="col-6 col-md-3">
+                <button type="submit" class="btn btn-primary form-control">Update</button>
+            </div>
+            <div class="col-6 col-md-3">
+                <a asp-controller="Courses" asp-action="CoursesList">Back to Course List</a>
+            </div>
+        </div>
+    </div>
+    @Html.AntiForgeryToken()
+</form>
+@section Scripts {
+    @{
+        <partial name="_ValidationScriptsPartial" />
+    }
+}

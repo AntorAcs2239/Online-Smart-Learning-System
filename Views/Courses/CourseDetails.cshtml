@@ -1,0 +1,17 @@
+﻿@model CourseWithInstructor
+
+<h2>@Model.Title</h2>
+<p>@Model.Description</p>
+<p>Price: @Model.Price</p>
+<p>Instructor: @Model.UserName</p>
+
+@if (Model.PdfUrl!=null)
+{
+    <h1>Congratulations , Now you can get the Course!!</h1>
+    <h1>Download the Course</h1>
+    <a href="@Model.PdfUrl" target="_blank">@Model.PdfFileName</a>
+}
+else
+{
+    <span>No PDF available</span>
+}
