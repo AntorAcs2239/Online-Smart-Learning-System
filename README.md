@@ -11,6 +11,8 @@ Welcome to the **Online Smart Learning System**! This project is an exciting and
 
 This application currently supports the following features:
 
+- **Registration:
+- **Login:
 - **Create Courses**: Easily add new courses with all relevant details.
 - **Update Courses**: Modify existing courses to keep the information up-to-date.
 - **Delete Courses**: Remove courses that are no longer needed.
