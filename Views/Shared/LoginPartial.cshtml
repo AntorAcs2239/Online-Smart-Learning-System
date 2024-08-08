@@ -1,0 +1,24 @@
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager< ApplicationUser> signInManager;
+@inject RoleManager<IdentityRole> roleManager;
+@inject UserManager<ApplicationUser> userManager;
+<ul class="navbar-nav">
+    @if (signInManager.IsSignedIn(User))
+    {
+        <li class="nav-item">
+            @User.Identity!.Name (@userManager.GetUserAsync(User).Result.Role)
+        </li>
+        <li class="nav-item ms-2">
+            <a asp-controller="Account" asp-action="LogOut" role="button">LogOut</a>
+        </li>
+    }
+    else
+    {
+        <li class="nav-item ms-2">
+            <a asp-controller="Account" asp-action="Register">Register</a>
+        </li>
+        <li class="nav-item ms-2">
+            <a asp-controller="Account" asp-action="Login">Login</a>
+        </li>
+    }
+</ul>

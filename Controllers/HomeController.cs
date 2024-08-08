@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Online__Smart_Learning_System.Models;
 using System.Diagnostics;

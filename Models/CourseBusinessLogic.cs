@@ -97,8 +97,16 @@ namespace Online__Smart_Learning_System.Models
         {
             try
             {
-                var query = @"UPDATE Course SET Title = @p0, Description = @p1, InstructorId = @p2, Price = @p3 WHERE CourseId = @p4";
-                int rowsAffected = _context.Database.ExecuteSqlRaw(query, course.Title, course.Description, course.InstructorId, course.Price, course.CourseId);
+                var query = @"UPDATE Course SET Title = @p0, Description = @p1, InstructorId = @p2, Price = @p3,PdfUrl=@p4 WHERE CourseId = @p4";
+                var query2 = @"UPDATE Course SET Title = @p0, Description = @p1, InstructorId = @p2, Price = @p3 WHERE CourseId = @p4";
+                if(course.PdfUrl != null)
+                {
+                    _context.Database.ExecuteSqlRaw(query, course.Title, course.Description, course.InstructorId, course.Price, course.CourseId, course.PdfUrl);
+                }
+                else
+                {
+                    _context.Database.ExecuteSqlRaw(query2, course.Title, course.Description, course.InstructorId, course.Price, course.CourseId);
+                }
             }
             catch (Exception ex)
             {

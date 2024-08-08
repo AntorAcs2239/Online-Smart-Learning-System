@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Online__Smart_Learning_System.Data;
 using Online__Smart_Learning_System.Models;
@@ -6,6 +7,7 @@ using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace Online__Smart_Learning_System.Controllers
 {
+    [Authorize]
     public class CoursesController : Controller
     {
         private readonly CourseBusinessLogic courseBusinessLogic;
@@ -24,10 +26,6 @@ namespace Online__Smart_Learning_System.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(Course course, IFormFile pdfFile)
         {
-            if (pdfFile == null)
-            {
-                
-            }
             if (pdfFile != null && pdfFile.Length > 0)
             {
                 // Upload to Google Drive
@@ -64,12 +62,34 @@ namespace Online__Smart_Learning_System.Controllers
             return View(course);
         }
         [HttpPost]
-        public IActionResult Edit(Course course)
+        public async Task<IActionResult> Edit(Course course,IFormFile pdfFile)
         {
-            if (ModelState.IsValid)
+            if (pdfFile != null && pdfFile.Length > 0)
             {
-                courseBusinessLogic.UpdateCourse(course);
-                return RedirectToAction("CoursesList");
+                var fileUrl = await UploadFileToGoogleDrive(pdfFile);
+
+                if (fileUrl != null)
+                {
+                    // Set URL and file name in the course model
+                    course.PdfFileName = pdfFile.FileName;
+                    course.PdfUrl = fileUrl; // Assuming PdfUrl is a new property in your Course model
+
+                    // Save course to the database
+                    courseBusinessLogic.UpdateCourse(course);
+                    await courseBusinessLogic.SaveChangesAsync();
+
+                    return RedirectToAction(nameof(CoursesList));
+                }
+                else
+                {
+                    courseBusinessLogic.UpdateCourse(course);
+                    ModelState.AddModelError("", "Failed to upload PDF to Google Drive.");
+                }
+            }
+            else
+            {
+                 courseBusinessLogic.UpdateCourse(course);
+                 return RedirectToAction("CoursesList");
             }
             return View();
         }

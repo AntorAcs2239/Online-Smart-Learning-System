@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Online__Smart_Learning_System.Data;
 using Online__Smart_Learning_System.Models;
@@ -10,6 +11,17 @@ builder.Services.AddDbContext<ApplicationDbContext>(options=>
 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 builder.Services.AddScoped<CourseBusinessLogic>();
 builder.Services.AddSingleton(new GoogleDriveService("G:\\Credential path\\credential.json"));
+
+builder.Services.AddIdentity<ApplicationUser,IdentityRole>(
+    option =>
+    {
+        option.Password.RequiredLength = 5;
+        option.Password.RequireNonAlphanumeric = true;
+        option.Password.RequireDigit = true;
+        option.Password.RequireUppercase = true;
+        option.Password.RequireLowercase = true;
+    }
+    ).AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultTokenProviders();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
