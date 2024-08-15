@@ -6,6 +6,7 @@ Welcome to the **Online Smart Learning System**! This project is an exciting and
 - **ASP.NET Core MVC**
 - **SQL Server**
 - **Entity Framework Core**
+- **Custom Identity
 
 ## ✨ Features ✨
 
@@ -13,6 +14,7 @@ This application currently supports the following features:
 
 - **Registration:
 - **Login:
+- **Rule base authentication and authorization
 - **Create Courses**: Easily add new courses with all relevant details.
 - **Update Courses**: Modify existing courses to keep the information up-to-date.
 - **Delete Courses**: Remove courses that are no longer needed.
